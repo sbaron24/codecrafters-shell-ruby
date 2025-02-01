@@ -1,17 +1,31 @@
 
 # Wait for user input
 
+def command_dir(arg)
+    ENV["PATH"].split(":").each do |dir|
+        begin
+            if Dir.entries(dir).find { |entry| entry == arg }
+                return dir
+            end
+        rescue
+        end
+    end
+
+  ""
+end
+
 loop do
     $stdout.write("$ ")
     command, *args = gets.chomp.split(" ")
-    if command == 'exit' && args.first == '0'
+    if command == 'exit'
         break
     elsif command == 'echo'
         $stdout.write("#{args.join(" ")}\n")
     elsif command == 'type'
         args.each do |arg|
-            if ['echo', 'type', 'exit'].include? arg
-                $stdout.write("#{arg} is a shell builtin\n")
+            dir = command_dir arg
+            unless dir.empty?
+                $stdout.write("#{arg} is #{dir}\n")
             else
                 $stdout.write("#{arg}: not found\n")
             end
