@@ -25,7 +25,7 @@ loop do
         args.each do |arg|
             dir = command_dir arg
             unless dir.empty?
-                $stdout.write("#{arg} is #{dir}\n")
+                $stdout.write("#{arg} is #{dir}/#{arg}\n")
             else
                 $stdout.write("#{arg}: not found\n")
             end
