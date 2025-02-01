@@ -23,11 +23,15 @@ loop do
         $stdout.write("#{args.join(" ")}\n")
     elsif command == 'type'
         args.each do |arg|
-            dir = command_dir arg
-            unless dir.empty?
-                $stdout.write("#{arg} is #{dir}/#{arg}\n")
+            if %w[echo exit type].include? arg 
+                $stdout.write("#{arg} is a shell builtin\n")
             else
-                $stdout.write("#{arg}: not found\n")
+                dir = command_dir arg
+                unless dir.empty?
+                    $stdout.write("#{arg} is #{dir}/#{arg}\n")
+                else
+                    $stdout.write("#{arg}: not found\n")
+                end
             end
         end
     elsif command
